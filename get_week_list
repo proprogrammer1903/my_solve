@@ -1,0 +1,49 @@
+public static ArrayList<String> getWeekList(String firstDayOfWeek){
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String currDate = formatter.format(todayDate);
+        Log.e("TAG", "getWeekList: "+currDate);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(todayDate);
+        formatter = new SimpleDateFormat("EEE");
+         String selected_day = formatter.format(todayDate);
+        Log.e("TAG", "getWeekList: "+selected_day );
+        //prev_date = cal.getTime();
+        ArrayList<String> list = new ArrayList();
+
+        while(!firstDayOfWeek.toLowerCase().equals(selected_day.toLowerCase())){
+            cal.add(Calendar.DAY_OF_MONTH, -1); //removes a day
+
+            formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String prev_date = formatter.format(cal.getTime());
+            list.add(prev_date);
+            formatter = new SimpleDateFormat("EEE");
+            selected_day = formatter.format(cal.getTime());
+
+        }
+        Collections.reverse(list);
+        list.add(currDate);
+        formatter = new SimpleDateFormat("EEE");
+        selected_day = formatter.format(todayDate);
+        while(!firstDayOfWeek.toLowerCase().equals(selected_day.toLowerCase())){
+            cal.add(Calendar.DAY_OF_MONTH, 1); //Adds a day
+
+            formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String next_date = formatter.format(cal.getTime());
+            list.add(next_date);
+            formatter = new SimpleDateFormat("EEE");
+            selected_day = formatter.format(cal.getTime());
+
+        }
+
+        list.remove(list.size()-1);
+        for (String date : list) {
+            Log.e("TAG", "date : "+date);
+
+        }
+        return list;
+
+
+
+    }
